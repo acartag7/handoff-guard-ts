@@ -1,0 +1,54 @@
+{
+  "name": "handoff-guard",
+  "version": "0.1.0",
+  "description": "Validation for LLM agents that retries with feedback",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "pnpm run typecheck"
+  },
+  "keywords": [
+    "llm",
+    "validation",
+    "agents",
+    "retry",
+    "zod"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acartag7/handoff-guard-ts.git"
+  },
+  "homepage": "https://github.com/acartag7/handoff-guard-ts#readme",
+  "bugs": {
+    "url": "https://github.com/acartag7/handoff-guard-ts/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}
