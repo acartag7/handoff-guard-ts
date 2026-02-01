@@ -1,6 +1,6 @@
 {
   "name": "handoff-guard",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Validation for LLM agents that retries with feedback",
   "type": "module",
   "main": "./dist/index.js",
