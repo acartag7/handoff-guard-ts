@@ -291,8 +291,13 @@ function generateSuggestion(error: z.core.$ZodIssueBase): string {
       return `Increase the length/value of '${field}'`;
     case 'too_big':
       return `Decrease the length/value of '${field}'`;
-    case 'invalid_type':
-      return `'${field}' should be ${(error as z.core.$ZodIssueInvalidType).expected}`;
+    case 'invalid_type': {
+      const received = error.message.match(/received (\w+)/)?.[1];
+      const typed = error as z.core.$ZodIssueInvalidType;
+      return received
+        ? `'${field}' should be ${typed.expected}, got ${received}`
+        : `'${field}' should be ${typed.expected}`;
+    }
     case 'invalid_value':
       return `'${field}' must be one of: ${(error as z.core.$ZodIssueInvalidValue).values?.join(', ')}`;
     default:
