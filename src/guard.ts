@@ -54,7 +54,7 @@ export function guard<TArgs extends unknown[], TReturn>(
       if (inputSchema) {
         const inputResult = inputSchema.safeParse(inputData);
         if (!inputResult.success) {
-          const firstError = inputResult.error.errors[0];
+          const firstError = inputResult.error.issues[0];
           const violation = new HandoffViolation({
             context: {
               nodeName: resolvedNodeName,
@@ -99,7 +99,7 @@ export function guard<TArgs extends unknown[], TReturn>(
           if (outputSchema) {
             const outputResult = outputSchema.safeParse(result);
             if (!outputResult.success) {
-              const firstError = outputResult.error.errors[0];
+              const firstError = outputResult.error.issues[0];
               const diagnostic = createDiagnostic({
                 type: 'validation',
                 message: firstError.message,
@@ -283,7 +283,7 @@ function formatFeedback(diagnostic: Diagnostic | null): string | null {
   return lines.join('\n');
 }
 
-function generateSuggestion(error: z.ZodIssue): string {
+function generateSuggestion(error: z.core.$ZodIssueBase): string {
   const field = error.path.join('.') || 'value';
 
   switch (error.code) {
@@ -292,9 +292,9 @@ function generateSuggestion(error: z.ZodIssue): string {
     case 'too_big':
       return `Decrease the length/value of '${field}'`;
     case 'invalid_type':
-      return `'${field}' should be ${(error as z.ZodInvalidTypeIssue).expected}, got ${(error as z.ZodInvalidTypeIssue).received}`;
-    case 'invalid_enum_value':
-      return `'${field}' must be one of: ${(error as z.ZodInvalidEnumValueIssue).options?.join(', ')}`;
+      return `'${field}' should be ${(error as z.core.$ZodIssueInvalidType).expected}`;
+    case 'invalid_value':
+      return `'${field}' must be one of: ${(error as z.core.$ZodIssueInvalidValue).values?.join(', ')}`;
     default:
       return `Fix '${field}': ${error.message}`;
   }
